@@ -1,4 +1,4 @@
-import 'package:apitesting/fetch_books.dart';
+import 'package:apitesting/fetch_menu_items.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,12 +12,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late final Future<List<BooksListModel>> books;
+  late final Future<List<MenuItemListModel>> menuItems;
 
   @override
   void initState() {
     super.initState();
-    books = fetchBooks(http.Client());
+    menuItems = fetchMenuItems(http.Client());
   }
 
   @override
@@ -31,16 +31,16 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Fetch Data Example'),
         ),
         body: Center(
-          child: FutureBuilder<List<BooksListModel>>(
-            future: books,
+          child: FutureBuilder<List<MenuItemListModel>>(
+            future: menuItems,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
                   itemCount: snapshot.data?.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(snapshot.data?[index].name ?? ''),
-                      subtitle: Text(snapshot.data?[index].auther ?? ''),
+                      title: Text(snapshot.data?[index].content[0].name ?? ''),
+                      subtitle: Text(snapshot.data?[index].content[0].imagename ?? ''),
                     );
                   },
                 );
